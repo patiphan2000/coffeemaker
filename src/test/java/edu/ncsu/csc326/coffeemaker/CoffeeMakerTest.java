@@ -193,6 +193,14 @@ public class CoffeeMakerTest {
 		assertEquals("", coffeeMaker.deleteRecipe(0));
 	}
 
+	/**
+	 * Given recipe in the coffee maker
+	 * When we edit the recipe all of the information can be changed
+	 * 		except name of the recipe
+	 * Then name of the recipe will be the same.
+	 * 
+	 * @throws RecipeException
+	 */
 	@Test
 	public void	testEditRecipe() throws RecipeException {
 		coffeeMaker.addRecipe(recipe1);
