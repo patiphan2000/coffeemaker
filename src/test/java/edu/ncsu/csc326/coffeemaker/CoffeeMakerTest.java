@@ -164,7 +164,7 @@ public class CoffeeMakerTest {
 		coffeeMaker.addRecipe(recipe3);
 		coffeeMaker.addRecipe(recipe2);
 
-//		coffeeMaker.addRecipe(recipe1);  // this recipe should not be accepted
+		coffeeMaker.addRecipe(recipe1);  // this recipe should not be accepted
 		assertFalse(Arrays.asList(coffeeMaker.getRecipes()).contains(recipe1));
 	}
 
@@ -191,6 +191,52 @@ public class CoffeeMakerTest {
 		coffeeMaker.addRecipe(recipe1);
 		assertEquals(recipe1.getName(), coffeeMaker.deleteRecipe(0));
 		assertEquals("", coffeeMaker.deleteRecipe(0));
+	}
+
+	@Test
+	public void	testEditRecipe() throws RecipeException {
+		coffeeMaker.addRecipe(recipe1);
+		Recipe changedRecipe = new Recipe();
+		changedRecipe.setName("Halo Coffee");
+		changedRecipe.setAmtChocolate("1");
+		changedRecipe.setAmtCoffee("2");
+		changedRecipe.setAmtMilk("2");
+		changedRecipe.setAmtSugar("3");
+		changedRecipe.setPrice("55");
+		coffeeMaker.editRecipe(0, changedRecipe);
+		assertEquals("Coffee", coffeeMaker.getRecipes()[0].getName());
+	}
+
+	@Test
+	public void testEditGhostRecipe() throws RecipeException {
+		Recipe changedRecipe = new Recipe();
+		changedRecipe.setName("Halo Coffee");
+		changedRecipe.setAmtChocolate("1");
+		changedRecipe.setAmtCoffee("2");
+		changedRecipe.setAmtMilk("2");
+		changedRecipe.setAmtSugar("3");
+		changedRecipe.setPrice("55");
+		coffeeMaker.editRecipe(0, changedRecipe);
+		assertNull(coffeeMaker.getRecipes()[0]);
+	}
+
+	@Test
+	public void testAddAirInventory() throws InventoryException {
+		coffeeMaker.addInventory("0", "0", "0", "0");
+	}
+
+	@Test(expected = InventoryException.class)
+	public void testAddDecimalInventory() throws InventoryException {
+		coffeeMaker.addInventory("4.2", "1.1", "2.3", "3.0");
+	}
+
+	@Test
+	public void testInventoryReport() throws InventoryException {
+		String amtBeforeAdd = "Coffee: 15\nMilk: 15\nSugar: 15\nChocolate: 15\n";
+		assertEquals(amtBeforeAdd, coffeeMaker.checkInventory());
+		coffeeMaker.addInventory("10", "10", "10", "10");
+		String amtAfterAdd = "Coffee: 25\nMilk: 25\nSugar: 25\nChocolate: 25\n";
+		assertEquals(amtAfterAdd, coffeeMaker.checkInventory());
 	}
 
 }
