@@ -198,7 +198,7 @@ public class CoffeeMakerTest {
 	 * When we edit the recipe all of the information can be changed
 	 * 		except name of the recipe
 	 * Then name of the recipe will be the same.
-	 * 
+	 *
 	 * @throws RecipeException
 	 */
 	@Test
@@ -215,6 +215,13 @@ public class CoffeeMakerTest {
 		assertEquals("Coffee", coffeeMaker.getRecipes()[0].getName());
 	}
 
+	/**
+	 * Given the coffee maker with no recipe
+	 * When we try to edit recipe that not exist
+	 * Then the recipe will still be empty.
+	 *
+	 * @throws RecipeException
+	 */
 	@Test
 	public void testEditGhostRecipe() throws RecipeException {
 		Recipe changedRecipe = new Recipe();
@@ -228,16 +235,36 @@ public class CoffeeMakerTest {
 		assertNull(coffeeMaker.getRecipes()[0]);
 	}
 
+	/**
+	 * Given the inventory
+	 * When we add nothing to the inventory(call addInventory with all parameter value 0)
+	 * Then no error will be occur.
+	 *
+	 * @throws InventoryException
+	 */
 	@Test
 	public void testAddAirInventory() throws InventoryException {
 		coffeeMaker.addInventory("0", "0", "0", "0");
 	}
 
+	/**
+	 * Given the inventory
+	 * When we add ingredient to the inventory with decimal value
+	 * Then we get an inventory exception.
+	 *
+	 * @throws InventoryException
+	 */
 	@Test(expected = InventoryException.class)
 	public void testAddDecimalInventory() throws InventoryException {
 		coffeeMaker.addInventory("4.2", "1.1", "2.3", "3.0");
 	}
 
+	/**
+	 * Given the inventory
+	 * When we add any ingredient to the inventory
+	 * Then the report will be update to show current value of each ingredient.
+	 * @throws InventoryException
+	 */
 	@Test
 	public void testInventoryReport() throws InventoryException {
 		String amtBeforeAdd = "Coffee: 15\nMilk: 15\nSugar: 15\nChocolate: 15\n";
