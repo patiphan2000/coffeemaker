@@ -274,4 +274,41 @@ public class CoffeeMakerTest {
 		assertEquals(amtAfterAdd, coffeeMaker.checkInventory());
 	}
 
+	/**
+	 * Given coffee maker
+	 * When there are no recipe in the machine and the order has been made
+	 * Then coffee maker will return all the user's money.
+	 */
+	@Test
+	public void testMakeCoffeeWithNoRecipe() {
+		assertEquals(100, coffeeMaker.makeCoffee(0, 100));
+	}
+
+	/**
+	 * Given coffee maker
+	 * When user order coffee with not enough money
+	 * Then the coffee will not been made and all the money will be returned.
+	 */
+	@Test
+	public void testNotEnoughMoney() {
+		coffeeMaker.addRecipe(recipe1);
+		assertEquals(20, coffeeMaker.makeCoffee(0, 20));
+	}
+
+	/**
+	 * Given coffee maker
+	 * When inventory is not enough to make a coffee
+	 * Then the coffee will not been made and all the money will be returned.
+	 */
+	@Test
+	public void testOutOfInventoryCoffee() {
+		coffeeMaker.addRecipe(recipe3);
+		for (int i=0; i<5; i++) {
+			coffeeMaker.makeCoffee(0, 100);
+		}
+		// after this the coffee maker will not be able to make any coffee.
+
+		assertEquals(100, coffeeMaker.makeCoffee(0, 100));
+	}
+
 }
