@@ -610,14 +610,148 @@ public class CoffeeMakerTest {
 	 * Then the coffee will not been made and all the money will be returned.
 	 */
 	@Test
-	public void testOutOfInventoryCoffee() {
-		coffeeMaker.addRecipe(recipe3);
-		for (int i=0; i<5; i++) {
-			coffeeMaker.makeCoffee(0, 100);
-		}
-		// after this the coffee maker will not be able to make any coffee.
-
+	public void testOutOfInventoryCoffee() throws RecipeException {
+		Recipe bigRecipe = new Recipe();
+		bigRecipe.setName("big coffee");
+		bigRecipe.setPrice("20");
+		bigRecipe.setAmtCoffee("15");
+		bigRecipe.setAmtSugar("15");
+		bigRecipe.setAmtMilk("15");
+		bigRecipe.setAmtChocolate("15");
+		coffeeMaker.addRecipe(bigRecipe);
+		assertEquals(80, coffeeMaker.makeCoffee(0, 100));
+		// after this inventory will be empty
 		assertEquals(100, coffeeMaker.makeCoffee(0, 100));
+	}
+
+	/**
+	 * Test ID: 34
+	 *
+	 * Given coffee maker
+	 * When add chocolate in the recipe with negative value
+	 * Then we get recipe exception.
+	 */
+	@Test(expected = RecipeException.class)
+	public void testRecipeNegativeChocolate() throws RecipeException {
+		Recipe recipe = new Recipe();
+		recipe.setAmtChocolate("-1");
+	}
+
+	/**
+	 * Test ID: 35
+	 *
+	 * Given coffee maker
+	 * When add chocolate in the recipe with invalid value
+	 * Then we get recipe exception.
+	 */
+	@Test(expected = RecipeException.class)
+	public void testRecipeInvalidChocolate() throws RecipeException {
+		Recipe recipe = new Recipe();
+		recipe.setAmtChocolate("chocolate");
+	}
+
+	/**
+	 * Test ID: 36
+	 *
+	 * Given coffee maker
+	 * When add coffee in the recipe with negative value
+	 * Then we get recipe exception.
+	 */
+	@Test(expected = RecipeException.class)
+	public void testRecipeNegativeCoffee() throws RecipeException {
+		Recipe recipe = new Recipe();
+		recipe.setAmtCoffee("-1");
+	}
+
+	/**
+	 * Test ID: 37
+	 *
+	 * Given coffee maker
+	 * When add coffee in the recipe with invalid value
+	 * Then we get recipe exception.
+	 */
+	@Test(expected = RecipeException.class)
+	public void testRecipeInvalidCoffee() throws RecipeException {
+		Recipe recipe = new Recipe();
+		recipe.setAmtCoffee("coffee");
+	}
+
+	/**
+	 * Test ID: 38
+	 *
+	 * Given coffee maker
+	 * When add milk in the recipe with negative value
+	 * Then we get recipe exception.
+	 */
+	@Test(expected = RecipeException.class)
+	public void testRecipeNegativeMilk() throws RecipeException {
+		Recipe recipe = new Recipe();
+		recipe.setAmtMilk("-1");
+	}
+
+	/**
+	 * Test ID: 39
+	 *
+	 * Given coffee maker
+	 * When add milk in the recipe with invalid value
+	 * Then we get recipe exception.
+	 */
+	@Test(expected = RecipeException.class)
+	public void testRecipeInvalidMilk() throws RecipeException {
+		Recipe recipe = new Recipe();
+		recipe.setAmtMilk("milk");
+	}
+
+	/**
+	 * Test ID: 40
+	 *
+	 * Given coffee maker
+	 * When add sugar in the recipe with negative value
+	 * Then we get recipe exception.
+	 */
+	@Test(expected = RecipeException.class)
+	public void testRecipeNegativeSugar() throws RecipeException {
+		Recipe recipe = new Recipe();
+		recipe.setAmtSugar("-1");
+	}
+
+	/**
+	 * Test ID: 41
+	 *
+	 * Given coffee maker
+	 * When add sugar in the recipe with invalid value
+	 * Then we get recipe exception.
+	 */
+	@Test(expected = RecipeException.class)
+	public void testRecipeInvalidSugar() throws RecipeException {
+		Recipe recipe = new Recipe();
+		recipe.setAmtSugar("sugar");
+	}
+
+	/**
+	 * Test ID: 42
+	 *
+	 * Given coffee maker
+	 * When set the prices of the recipe with negative value
+	 * Then we get recipe exception.
+	 */
+	@Test(expected = RecipeException.class)
+	public void testRecipeNegativePrice() throws RecipeException {
+		Recipe recipe = new Recipe();
+		recipe.setPrice("-1");
+	}
+
+	/**
+	 * Test ID: 43
+	 *
+	 * Given coffee maker
+	 * When set the prices of the recipe with invalid value
+	 * Then we get recipe exception.
+	 */
+	@Test(expected = RecipeException.class)
+	public void testRecipeInvalidPrice() throws RecipeException {
+		Recipe recipe = new Recipe();
+		recipe.setPrice("price");
 	}
 
 }
