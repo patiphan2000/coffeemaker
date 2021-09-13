@@ -581,7 +581,10 @@ public class CoffeeMakerTest {
 	 */
 	@Test
 	public void testMakeCoffeeWithNoRecipe() {
-		assertEquals(100, coffeeMaker.makeCoffee(0, 100));
+		// empty RecipeBook
+		recipeList = new Recipe[] {null, null, null, null};
+		when(mockCoffeeMaker.getRecipes()).thenReturn(recipeList);
+		assertEquals(100, mockCoffeeMaker.makeCoffee(0, 100));
 	}
 
 	/**
@@ -622,10 +625,12 @@ public class CoffeeMakerTest {
 	@Test
 	public void testOutOfInventoryCoffee() throws RecipeException {
 		Recipe bigRecipe = createRecipe("Big coffee", "15", "15", "15", "15", "20");
-		coffeeMaker.addRecipe(bigRecipe);
-		assertEquals(80, coffeeMaker.makeCoffee(0, 100));
+		recipeList = new Recipe[] {bigRecipe};
+		when(mockCoffeeMaker.getRecipes()).thenReturn(recipeList);
+		mockCoffeeMaker.addRecipe(bigRecipe);
+		assertEquals(80, mockCoffeeMaker.makeCoffee(0, 100));
 		// after this inventory will be empty
-		assertEquals(100, coffeeMaker.makeCoffee(0, 100));
+		assertEquals(100, mockCoffeeMaker.makeCoffee(0, 100));
 	}
 
 	/**
