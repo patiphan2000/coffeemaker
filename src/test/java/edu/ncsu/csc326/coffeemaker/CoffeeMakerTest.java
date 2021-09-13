@@ -20,12 +20,14 @@ package edu.ncsu.csc326.coffeemaker;
 
 import org.junit.Before;
 import org.junit.Test;
+import static org.mockito.Mockito.*;
 
 import edu.ncsu.csc326.coffeemaker.exceptions.InventoryException;
 import edu.ncsu.csc326.coffeemaker.exceptions.RecipeException;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -40,12 +42,17 @@ public class CoffeeMakerTest {
 	 * The object under test.
 	 */
 	private CoffeeMaker coffeeMaker;
+	private CoffeeMaker mockCoffeeMaker;
+	private RecipeBook recipeBook;
+	private Inventory inventory;
 	
 	// Sample recipes to use in testing.
 	private Recipe recipe1;
 	private Recipe recipe2;
 	private Recipe recipe3;
 	private Recipe recipe4;
+
+	private Recipe[] recipeList;
 
 	/**
 	 * Initializes some recipes to test with and the {@link CoffeeMaker} 
@@ -57,6 +64,10 @@ public class CoffeeMakerTest {
 	@Before
 	public void setUp() throws RecipeException {
 		coffeeMaker = new CoffeeMaker();
+
+		inventory = new Inventory();
+		recipeBook = mock(RecipeBook.class);
+		mockCoffeeMaker = new CoffeeMaker(recipeBook, inventory);
 		
 		//Set up for r1
 		recipe1 = new Recipe();
@@ -93,6 +104,10 @@ public class CoffeeMakerTest {
 		recipe4.setAmtMilk("1");
 		recipe4.setAmtSugar("1");
 		recipe4.setPrice("65");
+
+		// Stub of recipes (original).
+		recipeList = new Recipe[] {recipe1, recipe2, recipe3, recipe4};
+
 	}
 
 	/**
@@ -560,8 +575,9 @@ public class CoffeeMakerTest {
 	 */
 	@Test
 	public void testMakeCoffee() {
-		coffeeMaker.addRecipe(recipe1);
-		assertEquals(25, coffeeMaker.makeCoffee(0, 75));
+//		coffeeMaker.addRecipe(recipe1);
+		when(mockCoffeeMaker.getRecipes()).thenReturn(recipeList);
+		assertEquals(25, mockCoffeeMaker.makeCoffee(0, 75));
 	}
 
 	/**
@@ -585,8 +601,9 @@ public class CoffeeMakerTest {
 	 */
 	@Test(expected = NumberFormatException.class)
 	public void testDecimalMoney() {
-		coffeeMaker.addRecipe(recipe1);
-		assertEquals(Integer.parseInt("20.5"), coffeeMaker.makeCoffee(0, Integer.parseInt("20.5")));
+//		coffeeMaker.addRecipe(recipe1);
+		when(mockCoffeeMaker.getRecipes()).thenReturn(recipeList);
+		assertEquals(Integer.parseInt("20.5"), mockCoffeeMaker.makeCoffee(0, Integer.parseInt("20.5")));
 	}
 
 	/**
@@ -598,8 +615,9 @@ public class CoffeeMakerTest {
 	 */
 	@Test
 	public void testNotEnoughMoney() {
-		coffeeMaker.addRecipe(recipe1);
-		assertEquals(20, coffeeMaker.makeCoffee(0, 20));
+//		coffeeMaker.addRecipe(recipe1);
+		when(mockCoffeeMaker.getRecipes()).thenReturn(recipeList);
+		assertEquals(20, mockCoffeeMaker.makeCoffee(0, 20));
 	}
 
 	/**
