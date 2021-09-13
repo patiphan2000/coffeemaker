@@ -54,6 +54,17 @@ public class CoffeeMakerTest {
 
 	private Recipe[] recipeList;
 
+	private Recipe createRecipe(String name, String chocolate, String coffee, String milk, String sugar, String price) throws RecipeException {
+		Recipe recipe = new Recipe();
+		recipe.setName(name);
+		recipe.setAmtChocolate(chocolate);
+		recipe.setAmtCoffee(coffee);
+		recipe.setAmtMilk(milk);
+		recipe.setAmtSugar(sugar);
+		recipe.setPrice(price);
+		return recipe;
+	}
+
 	/**
 	 * Initializes some recipes to test with and the {@link CoffeeMaker} 
 	 * object we wish to test.
