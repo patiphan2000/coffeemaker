@@ -214,16 +214,9 @@ public class CoffeeMakerTest {
 	public void testEditRecipe() throws RecipeException {
 		coffeeMaker.addRecipe(recipe1);
 		assertEquals(5, coffeeMaker.makeCoffee(0, 55));
-		Recipe changedRecipe = new Recipe();
-		changedRecipe.setName("Halo Coffee");
-		changedRecipe.setAmtChocolate("1");
-		changedRecipe.setAmtCoffee("2");
-		changedRecipe.setAmtMilk("2");
-		changedRecipe.setAmtSugar("3");
-		changedRecipe.setPrice("55");
+		Recipe changedRecipe = createRecipe("Halo Coffee", "1", "2", "2", "3", "55");
 		coffeeMaker.editRecipe(0, changedRecipe);
 		assertEquals(0, coffeeMaker.makeCoffee(0, 55));
-
 	}
 
 	/**
@@ -237,13 +230,7 @@ public class CoffeeMakerTest {
 	 */
 	@Test
 	public void testEditGhostRecipe() throws RecipeException {
-		Recipe changedRecipe = new Recipe();
-		changedRecipe.setName("Halo Coffee");
-		changedRecipe.setAmtChocolate("1");
-		changedRecipe.setAmtCoffee("2");
-		changedRecipe.setAmtMilk("2");
-		changedRecipe.setAmtSugar("3");
-		changedRecipe.setPrice("55");
+		Recipe changedRecipe = createRecipe("Halo Coffee", "1", "2", "2", "3", "55");
 		coffeeMaker.editRecipe(0, changedRecipe);
 		assertNull(coffeeMaker.getRecipes()[0]);
 	}
@@ -261,13 +248,7 @@ public class CoffeeMakerTest {
 	@Test
 	public void	testEditRecipeName() throws RecipeException {
 		coffeeMaker.addRecipe(recipe1);
-		Recipe changedRecipe = new Recipe();
-		changedRecipe.setName("Halo Coffee");
-		changedRecipe.setAmtChocolate("1");
-		changedRecipe.setAmtCoffee("2");
-		changedRecipe.setAmtMilk("2");
-		changedRecipe.setAmtSugar("3");
-		changedRecipe.setPrice("55");
+		Recipe changedRecipe = createRecipe("Halo Coffee", "1", "2", "2", "3", "55");
 		coffeeMaker.editRecipe(0, changedRecipe);
 		assertEquals("Coffee", coffeeMaker.getRecipes()[0].getName());
 	}
@@ -640,13 +621,7 @@ public class CoffeeMakerTest {
 	 */
 	@Test
 	public void testOutOfInventoryCoffee() throws RecipeException {
-		Recipe bigRecipe = new Recipe();
-		bigRecipe.setName("big coffee");
-		bigRecipe.setPrice("20");
-		bigRecipe.setAmtCoffee("15");
-		bigRecipe.setAmtSugar("15");
-		bigRecipe.setAmtMilk("15");
-		bigRecipe.setAmtChocolate("15");
+		Recipe bigRecipe = createRecipe("Big coffee", "15", "15", "15", "15", "20");
 		coffeeMaker.addRecipe(bigRecipe);
 		assertEquals(80, coffeeMaker.makeCoffee(0, 100));
 		// after this inventory will be empty
